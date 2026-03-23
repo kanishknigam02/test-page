@@ -6,23 +6,115 @@ const yesBtn = document.getElementById("yes-btn");
 const noBtn = document.getElementById("no-btn");
 const buttonRow = document.getElementById("button-row");
 
-const gifStates = {
-  neutral: "assets/hamster-neutral.svg",
-  sad: "assets/hamster-sad.svg",
-  happy: "assets/hamster-happy.svg"
+const artStates = {
+  neutral: `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-label="Animated cute hamster">
+      <ellipse cx="110" cy="78" rx="32" ry="35" fill="#f4b7c1"/>
+      <ellipse cx="210" cy="78" rx="32" ry="35" fill="#f4b7c1"/>
+      <g>
+        <animateTransform attributeName="transform" type="translate" values="0 0; 0 -8; 0 0" dur="1.8s" repeatCount="indefinite"/>
+        <ellipse cx="160" cy="182" rx="94" ry="88" fill="#efd7bf"/>
+        <ellipse cx="160" cy="158" rx="86" ry="74" fill="#f7e7d2"/>
+        <ellipse cx="128" cy="120" rx="28" ry="30" fill="#d5a389"/>
+        <ellipse cx="192" cy="120" rx="28" ry="30" fill="#d5a389"/>
+        <circle cx="130" cy="160" r="8" fill="#2f2231"/>
+        <circle cx="190" cy="160" r="8" fill="#2f2231"/>
+        <ellipse cx="160" cy="184" rx="16" ry="13" fill="#ff8aa5"/>
+        <path d="M145 202 Q160 215 175 202" fill="none" stroke="#7e4f4c" stroke-width="6" stroke-linecap="round"/>
+        <ellipse cx="103" cy="187" rx="13" ry="9" fill="#f7b9bd" opacity="0.8"/>
+        <ellipse cx="217" cy="187" rx="13" ry="9" fill="#f7b9bd" opacity="0.8"/>
+      </g>
+    </svg>`,
+  sad: `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-label="Animated sad hamster">
+      <ellipse cx="110" cy="78" rx="32" ry="35" fill="#f4b7c1"/>
+      <ellipse cx="210" cy="78" rx="32" ry="35" fill="#f4b7c1"/>
+      <g>
+        <animateTransform attributeName="transform" type="translate" values="0 0; 0 5; 0 0" dur="2s" repeatCount="indefinite"/>
+        <ellipse cx="160" cy="182" rx="94" ry="88" fill="#efd7bf"/>
+        <ellipse cx="160" cy="158" rx="86" ry="74" fill="#f7e7d2"/>
+        <ellipse cx="128" cy="120" rx="28" ry="30" fill="#d5a389"/>
+        <ellipse cx="192" cy="120" rx="28" ry="30" fill="#d5a389"/>
+        <path d="M118 156 Q130 148 142 156" fill="none" stroke="#2f2231" stroke-width="6" stroke-linecap="round"/>
+        <path d="M178 156 Q190 148 202 156" fill="none" stroke="#2f2231" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="130" cy="168" r="7" fill="#2f2231"/>
+        <circle cx="190" cy="168" r="7" fill="#2f2231"/>
+        <ellipse cx="160" cy="188" rx="15" ry="12" fill="#ff8aa5"/>
+        <path d="M144 214 Q160 196 176 214" fill="none" stroke="#7e4f4c" stroke-width="6" stroke-linecap="round"/>
+        <path d="M114 176 C108 190 108 206 116 222" fill="none" stroke="#79c6ff" stroke-width="7" stroke-linecap="round">
+          <animate attributeName="opacity" values="0.2;1;0.2" dur="1.2s" repeatCount="indefinite"/>
+        </path>
+      </g>
+    </svg>`,
+  happy: `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-label="Animated happy hamster">
+      <ellipse cx="110" cy="78" rx="32" ry="35" fill="#f4b7c1"/>
+      <ellipse cx="210" cy="78" rx="32" ry="35" fill="#f4b7c1"/>
+      <g>
+        <animateTransform attributeName="transform" type="translate" values="0 0; 0 -10; 0 0" dur="1.4s" repeatCount="indefinite"/>
+        <ellipse cx="160" cy="182" rx="94" ry="88" fill="#efd7bf"/>
+        <ellipse cx="160" cy="158" rx="86" ry="74" fill="#f7e7d2"/>
+        <ellipse cx="128" cy="120" rx="28" ry="30" fill="#d5a389"/>
+        <ellipse cx="192" cy="120" rx="28" ry="30" fill="#d5a389"/>
+        <path d="M118 160 Q130 174 142 160" fill="none" stroke="#2f2231" stroke-width="6" stroke-linecap="round"/>
+        <path d="M178 160 Q190 174 202 160" fill="none" stroke="#2f2231" stroke-width="6" stroke-linecap="round"/>
+        <ellipse cx="160" cy="186" rx="16" ry="13" fill="#ff8aa5"/>
+        <path d="M140 202 Q160 225 180 202" fill="none" stroke="#7e4f4c" stroke-width="6" stroke-linecap="round"/>
+        <path d="M74 98 C84 84 100 84 109 98 C114 108 108 121 93 132 C78 121 70 108 74 98Z" fill="#ff5b93">
+          <animateTransform attributeName="transform" type="translate" values="0 0; 0 -8; 0 0" dur="1.2s" repeatCount="indefinite"/>
+        </path>
+        <path d="M222 92 C232 78 248 78 257 92 C262 102 256 115 241 126 C226 115 218 102 222 92Z" fill="#ff6ea8">
+          <animateTransform attributeName="transform" type="translate" values="0 0; 0 -10; 0 0" dur="1.5s" repeatCount="indefinite"/>
+        </path>
+      </g>
+    </svg>`,
+  teddy: `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Animated teddy with love">
+      <g>
+        <animateTransform attributeName="transform" type="rotate" values="-4 120 150; 4 120 150; -4 120 150" dur="1.8s" repeatCount="indefinite"/>
+        <circle cx="86" cy="78" r="24" fill="#9b6a52"/>
+        <circle cx="154" cy="78" r="24" fill="#9b6a52"/>
+        <circle cx="120" cy="106" r="58" fill="#b98569"/>
+        <ellipse cx="120" cy="120" rx="34" ry="26" fill="#f1d4b8"/>
+        <circle cx="100" cy="102" r="6" fill="#2b2026"/>
+        <circle cx="140" cy="102" r="6" fill="#2b2026"/>
+        <path d="M104 130 Q120 122 136 130" fill="none" stroke="#6f4343" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="120" cy="115" r="8" fill="#5d3b39"/>
+        <ellipse cx="120" cy="184" rx="52" ry="42" fill="#b98569"/>
+        <ellipse cx="78" cy="175" rx="16" ry="26" fill="#b98569"/>
+        <ellipse cx="162" cy="175" rx="16" ry="26" fill="#b98569"/>
+      </g>
+      <path d="M170 44 C178 32 192 32 200 44 C205 52 200 63 186 74 C172 63 166 52 170 44Z" fill="#ff5b93">
+        <animateTransform attributeName="transform" type="translate" values="0 0; 0 -12; 0 0" dur="1.1s" repeatCount="indefinite"/>
+      </path>
+    </svg>`
 };
 
 const noTexts = [
   "No",
-  "are you sure Pookie? 😰",
-  "Pookie please 🥺",
-  "I will be very sad! 😭",
-  "Last Chance! 😓"
+  "are you sure Pookie? \u{1F630}",
+  "Pookie please \u{1F97A}",
+  "I will be very sad! \u{1F62D}",
+  "Last Chance! \u{1F613}"
+];
+
+const evasivePositions = [
+  { x: 0.03, y: 0.08 },
+  { x: 0.66, y: 0.08 },
+  { x: 0.05, y: 0.5 },
+  { x: 0.64, y: 0.5 },
+  { x: 0.35, y: 0.18 }
 ];
 
 let noClickCount = 0;
 let noScale = 0.75;
 let yesLocked = false;
+let lastMoveIndex = -1;
+
+function renderArt() {
+  hamsterGif.innerHTML = artStates.neutral;
+  teddyGif.innerHTML = artStates.teddy;
+}
 
 function refreshNoButton() {
   noBtn.textContent = noTexts[Math.min(noClickCount, noTexts.length - 1)];
@@ -30,17 +122,17 @@ function refreshNoButton() {
 }
 
 function showSadState() {
-  hamsterGif.src = gifStates.sad;
+  hamsterGif.innerHTML = artStates.sad;
   teddyGif.classList.add("hidden");
   hearts.classList.add("hidden");
   mainText.textContent = noTexts[Math.min(noClickCount, noTexts.length - 1)];
 }
 
 function showHappyState() {
-  hamsterGif.src = gifStates.happy;
+  hamsterGif.innerHTML = artStates.happy;
   teddyGif.classList.remove("hidden");
   hearts.classList.remove("hidden");
-  mainText.textContent = "Yayyy! Knew it, Pookie! 💕";
+  mainText.textContent = "Yayyy! Knew it, Pookie! \u{1F495}";
 }
 
 function moveNoButtonRandomly() {
@@ -52,17 +144,21 @@ function moveNoButtonRandomly() {
   const btnRect = noBtn.getBoundingClientRect();
   const maxLeft = Math.max(0, rowRect.width - btnRect.width);
   const maxTop = Math.max(0, rowRect.height - btnRect.height);
-  const left = Math.random() * maxLeft;
-  const top = Math.random() * maxTop;
 
-  noBtn.style.left = `${left}px`;
-  noBtn.style.top = `${top}px`;
+  let nextIndex = Math.floor(Math.random() * evasivePositions.length);
+  if (nextIndex === lastMoveIndex) {
+    nextIndex = (nextIndex + 1) % evasivePositions.length;
+  }
+  lastMoveIndex = nextIndex;
+
+  noBtn.style.left = `${evasivePositions[nextIndex].x * maxLeft}px`;
+  noBtn.style.top = `${evasivePositions[nextIndex].y * maxTop}px`;
 }
 
 function makeNoButtonEvasive() {
   noBtn.classList.add("evasive");
-  noBtn.style.left = "250px";
-  noBtn.style.top = "22px";
+  noBtn.style.left = "0px";
+  noBtn.style.top = "0px";
   moveNoButtonRandomly();
 }
 
@@ -72,7 +168,7 @@ noBtn.addEventListener("click", () => {
   }
 
   noClickCount += 1;
-  noScale = Math.max(0.3, noScale * 0.8);
+  noScale = Math.max(0.58, noScale * 0.88);
   refreshNoButton();
   showSadState();
 
@@ -83,7 +179,6 @@ noBtn.addEventListener("click", () => {
 
 noBtn.addEventListener("touchstart", (event) => {
   if (noClickCount >= 4 && !yesLocked) {
-    // Move before mobile browsers can turn the touch into a click.
     event.preventDefault();
     moveNoButtonRandomly();
   }
@@ -111,9 +206,10 @@ buttonRow.addEventListener("mousemove", (event) => {
   const dy = event.clientY - (rect.top + rect.height / 2);
   const distance = Math.hypot(dx, dy);
 
-  if (distance < 120) {
+  if (distance < 110) {
     moveNoButtonRandomly();
   }
 });
 
+renderArt();
 refreshNoButton();
