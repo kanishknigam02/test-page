@@ -1,7 +1,9 @@
 const mainText = document.getElementById("main-text");
+const gifStage = document.getElementById("gif-stage");
 const hamsterGif = document.getElementById("hamster-gif");
 const teddyGif = document.getElementById("teddy-gif");
 const hearts = document.getElementById("hearts");
+const pageHearts = document.getElementById("page-hearts");
 const yesBtn = document.getElementById("yes-btn");
 const noBtn = document.getElementById("no-btn");
 const buttonRow = document.getElementById("button-row");
@@ -98,18 +100,15 @@ const noTexts = [
   "Last Chance! \u{1F613}"
 ];
 
-const evasivePositions = [
-  { x: 0.03, y: 0.08 },
-  { x: 0.66, y: 0.08 },
-  { x: 0.05, y: 0.5 },
-  { x: 0.64, y: 0.5 },
-  { x: 0.35, y: 0.18 }
-];
+const buttonTargets = {
+  topRight: { x: 1, y: 0 },
+  bottomLeft: { x: 0, y: 1 }
+};
 
 let noClickCount = 0;
 let noScale = 0.75;
 let yesLocked = false;
-let lastMoveIndex = -1;
+let evadeTarget = "topRight";
 
 function renderArt() {
   hamsterGif.innerHTML = artStates.neutral;
@@ -121,10 +120,26 @@ function refreshNoButton() {
   noBtn.style.setProperty("--btn-scale", `${noScale}`);
 }
 
+function positionNoButton(targetName) {
+  const target = buttonTargets[targetName];
+  const rowRect = buttonRow.getBoundingClientRect();
+  const btnRect = noBtn.getBoundingClientRect();
+  const maxLeft = Math.max(0, rowRect.width - btnRect.width);
+  const maxTop = Math.max(0, rowRect.height - btnRect.height);
+  const padding = 8;
+  const left = target.x === 1 ? Math.max(padding, maxLeft - padding) : padding;
+  const top = target.y === 1 ? Math.max(padding, maxTop - padding) : padding;
+
+  noBtn.style.left = `${left}px`;
+  noBtn.style.top = `${top}px`;
+}
+
 function showSadState() {
   hamsterGif.innerHTML = artStates.sad;
   teddyGif.classList.add("hidden");
   hearts.classList.add("hidden");
+  pageHearts.classList.add("hidden");
+  gifStage.classList.remove("celebrate");
   mainText.textContent = noTexts[Math.min(noClickCount, noTexts.length - 1)];
 }
 
@@ -132,34 +147,24 @@ function showHappyState() {
   hamsterGif.innerHTML = artStates.happy;
   teddyGif.classList.remove("hidden");
   hearts.classList.remove("hidden");
+  pageHearts.classList.remove("hidden");
+  gifStage.classList.add("celebrate");
   mainText.textContent = "Yayyy! Knew it, Pookie! \u{1F495}";
-}
-
-function moveNoButtonRandomly() {
-  if (!noBtn.classList.contains("evasive")) {
-    return;
-  }
-
-  const rowRect = buttonRow.getBoundingClientRect();
-  const btnRect = noBtn.getBoundingClientRect();
-  const maxLeft = Math.max(0, rowRect.width - btnRect.width);
-  const maxTop = Math.max(0, rowRect.height - btnRect.height);
-
-  let nextIndex = Math.floor(Math.random() * evasivePositions.length);
-  if (nextIndex === lastMoveIndex) {
-    nextIndex = (nextIndex + 1) % evasivePositions.length;
-  }
-  lastMoveIndex = nextIndex;
-
-  noBtn.style.left = `${evasivePositions[nextIndex].x * maxLeft}px`;
-  noBtn.style.top = `${evasivePositions[nextIndex].y * maxTop}px`;
 }
 
 function makeNoButtonEvasive() {
   noBtn.classList.add("evasive");
-  noBtn.style.left = "0px";
-  noBtn.style.top = "0px";
-  moveNoButtonRandomly();
+  evadeTarget = "topRight";
+  positionNoButton(evadeTarget);
+}
+
+function evadeToOtherCorner() {
+  if (!noBtn.classList.contains("evasive") || yesLocked) {
+    return;
+  }
+
+  evadeTarget = evadeTarget === "topRight" ? "bottomLeft" : "topRight";
+  positionNoButton(evadeTarget);
 }
 
 noBtn.addEventListener("click", () => {
@@ -168,7 +173,7 @@ noBtn.addEventListener("click", () => {
   }
 
   noClickCount += 1;
-  noScale = Math.max(0.58, noScale * 0.88);
+  noScale = Math.max(0.62, noScale * 0.92);
   refreshNoButton();
   showSadState();
 
@@ -177,10 +182,16 @@ noBtn.addEventListener("click", () => {
   }
 });
 
+noBtn.addEventListener("mouseenter", () => {
+  if (noClickCount >= 4 && !yesLocked) {
+    evadeToOtherCorner();
+  }
+});
+
 noBtn.addEventListener("touchstart", (event) => {
   if (noClickCount >= 4 && !yesLocked) {
     event.preventDefault();
-    moveNoButtonRandomly();
+    evadeToOtherCorner();
   }
 }, { passive: false });
 
@@ -196,18 +207,9 @@ yesBtn.addEventListener("click", () => {
   noBtn.style.top = "";
 });
 
-buttonRow.addEventListener("mousemove", (event) => {
-  if (noClickCount < 4 || yesLocked) {
-    return;
-  }
-
-  const rect = noBtn.getBoundingClientRect();
-  const dx = event.clientX - (rect.left + rect.width / 2);
-  const dy = event.clientY - (rect.top + rect.height / 2);
-  const distance = Math.hypot(dx, dy);
-
-  if (distance < 110) {
-    moveNoButtonRandomly();
+window.addEventListener("resize", () => {
+  if (noClickCount >= 4 && !yesLocked) {
+    positionNoButton(evadeTarget);
   }
 });
 
