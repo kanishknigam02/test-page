@@ -7,9 +7,9 @@ const noBtn = document.getElementById("no-btn");
 const buttonRow = document.getElementById("button-row");
 
 const gifStates = {
-  neutral: "https://media.tenor.com/CTPjWwB6I4AAAAAM/hamster-cute.gif",
-  sad: "https://media.tenor.com/4Q6rgrG6NU0AAAAi/sad-hamster.gif",
-  happy: "https://media.tenor.com/KQxHnVwWw7AAAAAM/hamster-love.gif"
+  neutral: "assets/hamster-neutral.svg",
+  sad: "assets/hamster-sad.svg",
+  happy: "assets/hamster-happy.svg"
 };
 
 const noTexts = [

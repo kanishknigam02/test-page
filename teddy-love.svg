@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Animated teddy with love">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#8d6a58" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <rect width="240" height="240" fill="none"/>
+  <g filter="url(#shadow)">
+    <g>
+      <animateTransform attributeName="transform" type="rotate" values="-4 120 150; 4 120 150; -4 120 150" dur="1.8s" repeatCount="indefinite"/>
+      <circle cx="86" cy="78" r="24" fill="#9b6a52"/>
+      <circle cx="154" cy="78" r="24" fill="#9b6a52"/>
+      <circle cx="120" cy="106" r="58" fill="#b98569"/>
+      <ellipse cx="120" cy="120" rx="34" ry="26" fill="#f1d4b8"/>
+      <circle cx="100" cy="102" r="6" fill="#2b2026"/>
+      <circle cx="140" cy="102" r="6" fill="#2b2026"/>
+      <path d="M104 130 Q120 122 136 130" fill="none" stroke="#6f4343" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="120" cy="115" r="8" fill="#5d3b39"/>
+      <ellipse cx="120" cy="184" rx="52" ry="42" fill="#b98569"/>
+      <ellipse cx="120" cy="184" rx="28" ry="22" fill="#f1d4b8"/>
+      <ellipse cx="78" cy="175" rx="16" ry="26" fill="#b98569"/>
+      <ellipse cx="162" cy="175" rx="16" ry="26" fill="#b98569"/>
+      <ellipse cx="96" cy="220" rx="16" ry="11" fill="#b98569"/>
+      <ellipse cx="144" cy="220" rx="16" ry="11" fill="#b98569"/>
+    </g>
+    <g>
+      <path d="M170 44 C178 32 192 32 200 44 C205 52 200 63 186 74 C172 63 166 52 170 44Z" fill="#ff5b93">
+        <animateTransform attributeName="transform" type="translate" values="0 0; 0 -12; 0 0" dur="1.1s" repeatCount="indefinite"/>
+      </path>
+      <path d="M36 56 C44 44 58 44 66 56 C71 64 66 75 52 86 C38 75 32 64 36 56Z" fill="#ff84ad">
+        <animateTransform attributeName="transform" type="translate" values="0 0; 0 -10; 0 0" dur="1.4s" repeatCount="indefinite"/>
+      </path>
+    </g>
+  </g>
+</svg>
